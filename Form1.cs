@@ -20,14 +20,22 @@ namespace WinFormApp1
 
         private void PlayGreeting()
         {
-            SoundPlayer player = new SoundPlayer("voice/greeting.wav");
+            SoundPlayer player = new SoundPlayer("C:\\Users\\Student\\Downloads\\Absa ATM 2.wav");
             player.Play();
         }
 
         private void DisplayLogo()
         {
-            pictureBox1.Image = Image.FromFile("images/logo.png");
+            pictureBox1.Image = Image.FromFile("C:\\Users\\Student\\Pictures\\Screenshots\\image.png"
+                );
+
+            //fill the picture to the rectangle
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+
+            //Position the PictureBox at the top-left
+            pictureBox1.Location = new Point(0, 0);
         }
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -35,6 +43,11 @@ namespace WinFormApp1
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+        }
+
+        private void Form1_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
