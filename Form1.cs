@@ -55,7 +55,7 @@ namespace WinFormApp1
             // Initial greeting prompt in conversation box
             if (rtbConversation != null)
             {
-                rtbConversation.AppendText("Bot: Welcome to CyberSecureBot! What is your name?\n\n");
+                rtbConversation.AppendText("Bot: Welcome to CyberSecureBot! What is your name?\r\n\r\n");
             }
         }
 
@@ -149,7 +149,7 @@ namespace WinFormApp1
             if (string.IsNullOrEmpty(userName))
             {
                 userName = input;
-                return $"Nice to meet you, {userName}! How can I help you with cybersecurity today?";
+                return $"Nice to meet you, {userName}!{Environment.NewLine}How can I help you with cybersecurity today?";
             }
 
             // Capture Favorite Topic / Memory (Step 16)
@@ -159,12 +159,12 @@ namespace WinFormApp1
                 else if (text.Contains("scam")) favouriteTopic = "scams";
                 else favouriteTopic = "cybersecurity";
 
-                return $"Got it! I'll remember that you are interested in {favouriteTopic}.";
+                return $"Got it! I'll remember that you are interested in {favouriteTopic}.{Environment.NewLine}Ask me anything about it.";
             }
 
             // Sentiment Detection (Step 17)
             string prefix = "";
-            foreach (string word in worriedWords)
+            foreach (string word in worriedWords ?? new List<string>())
             {
                 if (text.Contains(word))
                 {
@@ -175,11 +175,18 @@ namespace WinFormApp1
 
             // Follow-up Handling (Step 15)
             if ((text.Contains("tell me more") || text.Contains("another tip")) && !string.IsNullOrEmpty(lastTopic))
-            {
+            {   
                 if (keywordResponses.ContainsKey(lastTopic))
                 {
                     List<string> tips = keywordResponses[lastTopic];
-                    return prefix + "Here is another detail on " + lastTopic + ": " + tips[rng.Next(tips.Count)];
+                    // Provide a multi-line tip set (two lines if available)
+                    int i = rng.Next(tips.Count);
+                    string first = tips[i];
+                    string second = tips.Count > 1 ? tips[(i + 1) % tips.Count] : "";
+                    string body = first;
+                    if (!string.IsNullOrEmpty(second))
+                        body += Environment.NewLine + second;
+                    return prefix + $"Here is another detail on {lastTopic}:{Environment.NewLine}{body}";
                 }
             }
 
@@ -190,17 +197,35 @@ namespace WinFormApp1
                 {
                     lastTopic = key; // Save topic state for follow-ups
                     List<string> responses = keywordResponses[key];
-                    return prefix + responses[rng.Next(responses.Count)]; // Pick random response (Step 14)
+                    int idx = rng.Next(responses.Count);
+                    string first = responses[idx];
+                    string second = responses.Count > 1 ? responses[(idx + 1) % responses.Count] : "";
+                    string combined = first;
+                    if (!string.IsNullOrEmpty(second))
+                        combined += Environment.NewLine + second;
+                    // Return a multi-line reply (each tip on its own line)
+                    return prefix + combined;
                 }
             }
 
             // Central Fallback (Step 18)
-            return prefix + "I'm not sure I understand. Try asking me about 'passwords', 'scams', or 'privacy'.";
+            return prefix + "I'm not sure I understand." + Environment.NewLine +
+                   "Try asking me about 'passwords', 'scams', or 'privacy'.";
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             // Left empty per Step 8 instructions
+        }
+
+        private void rtbConversation_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUserInput_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -56,6 +56,7 @@
             rtbConversation.ScrollBars = ScrollBars.Vertical;
             rtbConversation.Size = new Size(592, 380);
             rtbConversation.TabIndex = 4;
+            rtbConversation.TextChanged += rtbConversation_TextChanged;
             // 
             // txtUserInput
             // 
@@ -63,7 +64,7 @@
             txtUserInput.Name = "txtUserInput";
             txtUserInput.Size = new Size(500, 23);
             txtUserInput.TabIndex = 5;
-            txtUserInput.Text = "hi";
+            txtUserInput.TextChanged += txtUserInput_TextChanged;
             txtUserInput.KeyDown += txtUserInput_KeyDown;
             // 
             // btnSend
