@@ -14,6 +14,7 @@ namespace WinFormApp1
         private Panel bottomPanel;
         private FlowLayoutPanel chatFlow;
         private SoundPlayer greetingPlayer;
+        private ChatEngine engine = new ChatEngine();
 
         public Form1()
         {
@@ -284,7 +285,7 @@ namespace WinFormApp1
             AddChatBubble(userMessage, true);
             txtUserInput.Clear();
 
-            string response = GetResponse(userMessage);
+            string response = engine.GetResponse(userMessage);
             AddChatBubble(response, false);
 
             txtUserInput.Focus();
@@ -301,149 +302,6 @@ namespace WinFormApp1
                 e.SuppressKeyPress = true;
                 SendMessage();
             }
-        }
-
-        // Basic cybersecurity response system
-        private string GetResponse(string message)
-        {
-            string input = message.ToLowerInvariant().Trim();
-
-            if (input.Contains("how are you"))
-            {
-                return "I'm doing well, thank you! I'm ready to help " +
-                       "you learn about cybersecurity. How can I help?";
-            }
-
-            if (input.Contains("your name") ||
-                input.Contains("who are you"))
-            {
-                return "I'm CyberSecureBot, your cybersecurity " +
-                       "assistant. I can help you learn how to stay " +
-                       "safe online.";
-            }
-
-            if (input.Contains("your purpose") ||
-                input.Contains("what is your purpose") ||
-                input.Contains("what do you do"))
-            {
-                return "My purpose is to help you understand " +
-                       "cybersecurity and protect yourself from " +
-                       "online threats such as phishing, scams, " +
-                       "unsafe websites and weak passwords.";
-            }
-
-            if (input.Contains("what can i ask") ||
-                input.Contains("what can you help") ||
-                input.Contains("help me"))
-            {
-                return "You can ask me about:\n\n" +
-                       "• Password safety\n" +
-                       "• Phishing emails and messages\n" +
-                       "• Safe browsing\n" +
-                       "• Suspicious links\n" +
-                       "• Two-factor authentication\n" +
-                       "• Malware and online scams\n\n" +
-                       "Type a question to get started.";
-            }
-
-            if (input.Contains("password"))
-            {
-                return "PASSWORD SAFETY\n\n" +
-                       "• Use long, unique passwords for each account.\n" +
-                       "• Use a trusted password manager.\n" +
-                       "• Never share your password or one-time PIN.\n" +
-                       "• Enable two-factor authentication where possible.\n" +
-                       "• Change a password immediately if you believe " +
-                       "someone else knows it.";
-            }
-
-            if (input.Contains("phishing") ||
-                input.Contains("fake email") ||
-                input.Contains("scam message"))
-            {
-                return "PHISHING AWARENESS\n\n" +
-                       "Phishing is an attempt to trick you into " +
-                       "revealing information or clicking a harmful link.\n\n" +
-                       "Watch for urgent threats, unexpected attachments, " +
-                       "unusual sender addresses and requests for passwords " +
-                       "or banking details.\n\n" +
-                       "Do not click suspicious links. Verify the sender " +
-                       "using a trusted contact method.";
-            }
-
-            if (input.Contains("safe browsing") ||
-                input.Contains("browse safely") ||
-                input.Contains("website"))
-            {
-                return "SAFE BROWSING TIPS\n\n" +
-                       "• Keep your browser and operating system updated.\n" +
-                       "• Check website addresses carefully.\n" +
-                       "• Use HTTPS websites, but remember HTTPS alone " +
-                       "does not guarantee a site is trustworthy.\n" +
-                       "• Avoid downloading files from unknown sources.\n" +
-                       "• Never enter sensitive information on a website " +
-                       "you do not trust.";
-            }
-
-            if (input.Contains("suspicious link") ||
-                input.Contains("unknown link") ||
-                input.Contains("click a link"))
-            {
-                return "Do not click a link if you are unsure about it. " +
-                       "Check the full web address carefully, verify the " +
-                       "sender independently and visit the official " +
-                       "website by typing its address yourself. If you " +
-                       "already entered a password, change it from the " +
-                       "official website and secure your account.";
-            }
-
-            if (input.Contains("two-factor") ||
-                input.Contains("two factor") ||
-                input.Contains("2fa") ||
-                input.Contains("authentication"))
-            {
-                return "Two-factor authentication (2FA) adds another " +
-                       "layer of protection beyond your password. Use an " +
-                       "authenticator app or security key where possible. " +
-                       "Never share verification codes with anyone.";
-            }
-
-            if (input.Contains("malware") ||
-                input.Contains("virus"))
-            {
-                return "Malware is software designed to harm a device, " +
-                       "steal information or gain unauthorised access. " +
-                       "Keep your software updated, use reputable security " +
-                       "protection and avoid suspicious downloads. If you " +
-                       "suspect an infection, disconnect the affected " +
-                       "device from the network and seek trusted technical help.";
-            }
-
-            if (input.Contains("thank"))
-            {
-                return "You're welcome! Stay alert and stay safe online.";
-            }
-
-            if (input == "hi" ||
-                input == "hello" ||
-                input == "hey" ||
-                input.StartsWith("hi ") ||
-                input.StartsWith("hello "))
-            {
-                return "Hello! What would you like to know about " +
-                       "cybersecurity today?";
-            }
-
-            if (input.Contains("bye") ||
-                input.Contains("goodbye"))
-            {
-                return "Goodbye! Remember to protect your passwords, " +
-                       "think before clicking and stay safe online.";
-            }
-
-            return "I'm not sure how to answer that yet. Try asking " +
-                   "about password safety, phishing, safe browsing, " +
-                   "suspicious links, malware or two-factor authentication.";
         }
 
         // Form load event
