@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Media;
@@ -13,6 +12,7 @@ namespace WinFormApp1
         private Panel chatBackground;
         private Panel bottomPanel;
         private FlowLayoutPanel chatFlow;
+
         private SoundPlayer greetingPlayer;
         private ChatEngine engine = new ChatEngine();
 
@@ -31,8 +31,7 @@ namespace WinFormApp1
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.White;
 
-            // Hide the original designer controls that are
-            // replaced by the new chat interface.
+            // Hide original designer controls
             rtbConversation.Visible = false;
             pictureBox1.Visible = false;
 
@@ -45,13 +44,15 @@ namespace WinFormApp1
             Label titleLabel = new Label();
             titleLabel.Text = "CyberSecureBot";
             titleLabel.ForeColor = Color.White;
-            titleLabel.Font = new Font("Segoe UI", 17, FontStyle.Bold);
+            titleLabel.Font = new Font(
+                "Segoe UI", 17, FontStyle.Bold);
             titleLabel.AutoSize = true;
             titleLabel.Location = new Point(22, 10);
 
             Label subtitleLabel = new Label();
             subtitleLabel.Text = "Your cybersecurity assistant";
-            subtitleLabel.ForeColor = Color.FromArgb(220, 240, 235);
+            subtitleLabel.ForeColor =
+                Color.FromArgb(220, 240, 235);
             subtitleLabel.Font = new Font("Segoe UI", 9);
             subtitleLabel.AutoSize = true;
             subtitleLabel.Location = new Point(24, 44);
@@ -62,7 +63,8 @@ namespace WinFormApp1
             // Chat background
             chatBackground = new Panel();
             chatBackground.Dock = DockStyle.Fill;
-            chatBackground.BackColor = Color.FromArgb(235, 229, 221);
+            chatBackground.BackColor =
+                Color.FromArgb(235, 229, 221);
             chatBackground.Padding = new Padding(10);
 
             chatFlow = new FlowLayoutPanel();
@@ -70,7 +72,8 @@ namespace WinFormApp1
             chatFlow.FlowDirection = FlowDirection.TopDown;
             chatFlow.WrapContents = false;
             chatFlow.AutoScroll = true;
-            chatFlow.BackColor = Color.FromArgb(235, 229, 221);
+            chatFlow.BackColor =
+                Color.FromArgb(235, 229, 221);
             chatFlow.Padding = new Padding(5);
 
             chatBackground.Controls.Add(chatFlow);
@@ -79,54 +82,67 @@ namespace WinFormApp1
             bottomPanel = new Panel();
             bottomPanel.Dock = DockStyle.Bottom;
             bottomPanel.Height = 75;
-            bottomPanel.BackColor = Color.FromArgb(245, 245, 245);
+            bottomPanel.BackColor =
+                Color.FromArgb(245, 245, 245);
             bottomPanel.Padding = new Padding(12);
 
-            // Reuse the existing designer textbox and button.
+            // User input textbox
             txtUserInput.Parent = bottomPanel;
             txtUserInput.Visible = true;
             txtUserInput.Multiline = false;
             txtUserInput.Font = new Font("Segoe UI", 11);
             txtUserInput.BackColor = Color.White;
             txtUserInput.ForeColor = Color.Black;
-            txtUserInput.BorderStyle = BorderStyle.FixedSingle;
+            txtUserInput.BorderStyle =
+                BorderStyle.FixedSingle;
             txtUserInput.Anchor =
-                AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+                AnchorStyles.Left |
+                AnchorStyles.Right |
+                AnchorStyles.Top;
 
+            // Send button
             btnSend.Parent = bottomPanel;
             btnSend.Visible = true;
             btnSend.Text = "Send";
-            btnSend.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnSend.Font = new Font(
+                "Segoe UI", 10, FontStyle.Bold);
             btnSend.BackColor = Color.FromArgb(7, 94, 84);
             btnSend.ForeColor = Color.White;
             btnSend.FlatStyle = FlatStyle.Flat;
             btnSend.FlatAppearance.BorderSize = 0;
-            btnSend.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSend.Anchor =
+                AnchorStyles.Top | AnchorStyles.Right;
 
-            // Position the input and button when the window resizes.
+            // Resize input controls
             bottomPanel.Resize += (sender, e) =>
             {
                 int buttonWidth = 90;
                 int gap = 10;
                 int left = 12;
                 int top = 22;
+
                 int inputWidth = Math.Max(
                     100,
                     bottomPanel.ClientSize.Width
                     - left - buttonWidth - gap - 12
                 );
 
-                txtUserInput.Location = new Point(left, top);
-                txtUserInput.Size = new Size(inputWidth, 32);
+                txtUserInput.Location =
+                    new Point(left, top);
+
+                txtUserInput.Size =
+                    new Size(inputWidth, 32);
 
                 btnSend.Location = new Point(
                     left + inputWidth + gap,
                     top
                 );
-                btnSend.Size = new Size(buttonWidth, 32);
+
+                btnSend.Size =
+                    new Size(buttonWidth, 32);
             };
 
-            // Add panels to the form.
+            // Add panels to form
             this.Controls.Add(chatBackground);
             this.Controls.Add(bottomPanel);
             this.Controls.Add(headerPanel);
@@ -141,7 +157,7 @@ namespace WinFormApp1
             );
         }
 
-        // Play the original greeting sound
+        // Play greeting sound
         private void PlayGreeting()
         {
             try
@@ -152,7 +168,6 @@ namespace WinFormApp1
                     "greeting.wav"
                 );
 
-                // Use the original sound file if greeting.wav is missing.
                 if (!File.Exists(soundPath))
                 {
                     soundPath =
@@ -167,12 +182,14 @@ namespace WinFormApp1
             }
             catch (Exception)
             {
-                // The chatbot should still work if sound playback fails.
+                // Continue without sound if playback fails.
             }
         }
 
-        // Create a chat bubble
-        private void AddChatBubble(string message, bool isUser)
+        // Create chat bubble
+        private void AddChatBubble(
+            string message,
+            bool isUser)
         {
             if (chatFlow == null)
                 return;
@@ -194,6 +211,7 @@ namespace WinFormApp1
                 Math.Max(180, availableWidth - 45),
                 0
             );
+
             bubble.Text = message;
             bubble.Font = new Font("Segoe UI", 10);
             bubble.Padding = new Padding(10);
@@ -201,13 +219,17 @@ namespace WinFormApp1
 
             if (isUser)
             {
-                bubble.BackColor = Color.FromArgb(213, 249, 200);
-                bubble.ForeColor = Color.FromArgb(25, 35, 25);
+                bubble.BackColor =
+                    Color.FromArgb(213, 249, 200);
+
+                bubble.ForeColor =
+                    Color.FromArgb(25, 35, 25);
             }
             else
             {
                 bubble.BackColor = Color.White;
-                bubble.ForeColor = Color.FromArgb(35, 35, 35);
+                bubble.ForeColor =
+                    Color.FromArgb(35, 35, 35);
             }
 
             bubbleRow.Height = bubble.PreferredHeight + 4;
@@ -215,7 +237,11 @@ namespace WinFormApp1
             if (isUser)
             {
                 bubble.Location = new Point(
-                    Math.Max(0, bubbleRow.Width - bubble.PreferredWidth - 5),
+                    Math.Max(
+                        0,
+                        bubbleRow.Width -
+                        bubble.PreferredWidth - 5
+                    ),
                     0
                 );
             }
@@ -226,7 +252,7 @@ namespace WinFormApp1
 
             bubbleRow.Controls.Add(bubble);
 
-            // Keep chat rows responsive when the window is resized.
+            // Keep chat rows responsive
             bubbleRow.Resize += (sender, e) =>
             {
                 int maxBubbleWidth = Math.Max(
@@ -234,15 +260,16 @@ namespace WinFormApp1
                     bubbleRow.ClientSize.Width - 45
                 );
 
-                bubble.MaximumSize = new Size(maxBubbleWidth, 0);
+                bubble.MaximumSize =
+                    new Size(maxBubbleWidth, 0);
 
                 if (isUser)
                 {
                     bubble.Location = new Point(
                         Math.Max(
                             0,
-                            bubbleRow.ClientSize.Width
-                            - bubble.PreferredWidth - 5
+                            bubbleRow.ClientSize.Width -
+                            bubble.PreferredWidth - 5
                         ),
                         0
                     );
@@ -252,22 +279,27 @@ namespace WinFormApp1
                     bubble.Location = new Point(5, 0);
                 }
 
-                bubbleRow.Height = bubble.PreferredHeight + 4;
+                bubbleRow.Height =
+                    bubble.PreferredHeight + 4;
             };
 
             chatFlow.Controls.Add(bubbleRow);
             chatFlow.ScrollControlIntoView(bubbleRow);
         }
 
-        // Send a message
-        private void btnSend_Click(object sender, EventArgs e)
+        // Send button click
+        private void btnSend_Click(
+            object sender,
+            EventArgs e)
         {
             SendMessage();
         }
 
+        // Send message and save conversation
         private void SendMessage()
         {
-            string userMessage = txtUserInput.Text.Trim();
+            string userMessage =
+                txtUserInput.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(userMessage))
             {
@@ -282,20 +314,43 @@ namespace WinFormApp1
                 return;
             }
 
+            // Display user message
             AddChatBubble(userMessage, true);
             txtUserInput.Clear();
 
-            string response = engine.GetResponse(userMessage);
+            // Get chatbot response
+            string response =
+                engine.GetResponse(userMessage);
+
+            // Display chatbot response
             AddChatBubble(response, false);
+
+            // Save conversation to SQL Server
+            try
+            {
+                engine.SaveConversation(
+                    userMessage,
+                    response
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Could not save conversation " +
+                    "to database.\n\n" + ex.Message,
+                    "Database Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
 
             txtUserInput.Focus();
         }
 
-        // Allow the Enter key to send messages
+        // Enter key sends message
         private void txtUserInput_KeyDown(
             object sender,
-            KeyEventArgs e
-        )
+            KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -305,32 +360,34 @@ namespace WinFormApp1
         }
 
         // Form load event
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(
+            object sender,
+            EventArgs e)
         {
             PlayGreeting();
             txtUserInput.Focus();
         }
 
-        // Existing Designer event handlers
-        private void pictureBox1_Click(object sender, EventArgs e)
+        // Existing designer event handlers
+        private void pictureBox1_Click(
+            object sender,
+            EventArgs e)
         {
-            // The logo area is hidden for the WhatsApp-style layout.
+            // Logo area is hidden.
         }
 
         private void rtbConversation_TextChanged(
             object sender,
-            EventArgs e
-        )
+            EventArgs e)
         {
-            // The original conversation textbox is replaced by chat bubbles.
+            // Original conversation textbox is replaced.
         }
 
         private void txtUserInput_TextChanged(
             object sender,
-            EventArgs e
-        )
+            EventArgs e)
         {
-            // Reserved for future input features.
+            // Reserved for future features.
         }
     }
 }
