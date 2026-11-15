@@ -81,6 +81,25 @@ namespace WinFormApp1
                 return "My purpose is to help you understand cybersecurity " +
                        "and protect yourself from online threats.";
 
+            // CYBERSECURITY DEFINITION
+            if (lower.Contains("cybersecurity") ||
+                lower.Contains("cyber security") ||
+                lower.Contains("online security"))
+            {
+                return "WHAT IS CYBERSECURITY?\n\n" +
+                       "Cybersecurity is the practice of protecting computers, " +
+                       "mobile devices, networks and personal information " +
+                       "from digital attacks and unauthorised access.\n\n" +
+                       "It helps keep your information safe from hackers, " +
+                       "malware, phishing and other online threats.\n\n" +
+                       "IMPORTANT CYBERSECURITY TIPS:\n\n" +
+                       "1. Use strong and unique passwords.\n" +
+                       "2. Avoid clicking suspicious links.\n" +
+                       "3. Keep your software updated.\n" +
+                       "4. Enable two-factor authentication.\n" +
+                       "5. Never share sensitive personal information online.";
+            }
+
             if (lower.Contains("password"))
                 return "PASSWORD SAFETY\n\n" +
                        "1. Use long, unique passwords.\n" +
@@ -143,8 +162,8 @@ namespace WinFormApp1
                        "! Remember to stay safe online.";
 
             return "I'm not sure how to answer that yet. Try asking me about " +
-                   "passwords, phishing, malware, safe browsing or " +
-                   "two-factor authentication.";
+                   "cybersecurity, passwords, phishing, malware, safe browsing " +
+                   "or two-factor authentication.";
         }
 
         // Save conversation
@@ -171,7 +190,7 @@ namespace WinFormApp1
             }
         }
 
-        // NEW: Retrieve conversation history
+        // Retrieve conversation history
         public DataTable GetConversationHistory()
         {
             DataTable history = new DataTable();

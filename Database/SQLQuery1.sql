@@ -1,0 +1,11 @@
+USE [New CyberSecureBotDB];
+GO
+
+CREATE TABLE dbo.[Table]
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    UserMessage NVARCHAR(MAX) NOT NULL,
+    BotResponse NVARCHAR(MAX) NOT NULL,
+    SentAt DATETIME NOT NULL
+);
+GO

@@ -60,6 +60,47 @@ namespace WinFormApp1
             headerPanel.Controls.Add(titleLabel);
             headerPanel.Controls.Add(subtitleLabel);
 
+            // History button
+            Button historyButton = new Button();
+            historyButton.Text = "History";
+            historyButton.Size = new Size(110, 35);
+            historyButton.Font = new Font(
+                "Segoe UI", 10, FontStyle.Bold);
+
+            historyButton.BackColor = Color.White;
+            historyButton.ForeColor =
+                Color.FromArgb(7, 94, 84);
+
+            historyButton.FlatStyle = FlatStyle.Flat;
+            historyButton.FlatAppearance.BorderSize = 0;
+
+            historyButton.Location = new Point(
+                headerPanel.ClientSize.Width - 130, 20);
+
+            // Keep History button on the right when resizing
+            headerPanel.Resize += (sender, e) =>
+            {
+                historyButton.Location = new Point(
+                    Math.Max(
+                        10,
+                        headerPanel.ClientSize.Width
+                        - historyButton.Width - 20
+                    ),
+                    20
+                );
+            };
+
+            // Open conversation history
+            historyButton.Click += (sender, e) =>
+            {
+                using (HistoryForm historyForm = new HistoryForm())
+                {
+                    historyForm.ShowDialog(this);
+                }
+            };
+
+            headerPanel.Controls.Add(historyButton);
+
             // Chat background
             chatBackground = new Panel();
             chatBackground.Dock = DockStyle.Fill;
